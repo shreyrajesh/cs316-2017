@@ -41,10 +41,10 @@
 %type <decl> declaration
 //ADD CODE HERE
 %type <sequence_ast> statement_list
-%type <asmt_ast> assignment_statement
+%type <ast> assignment_statement
 %type <ast> variable
 %type <ast> constant
-%type <arthm_ast> arith_expression
+%type <ast> arith_expression
 %type <ast> expression_term
 
 %start program
@@ -334,6 +334,7 @@ assignment_statement:
 		// make a joint ast
 
 		$$ = assgn_stmt;
+		cout << "asmt OK\n";
 	}
 	}
 ;
@@ -411,7 +412,8 @@ arith_expression:
 	{
 	if (NOT_ONLY_PARSE)
 	{
-		$$ = (Arithmetic_Expr_Ast *) $2;
+		$$ = $2;
+		cout << "() OK\n";
 	}
 
 	}
@@ -429,7 +431,8 @@ arith_expression:
 	{
 	if (NOT_ONLY_PARSE)
 	{
-		$$ = (Arithmetic_Expr_Ast *) $1;
+		$$ =  $1;
+		// $$ = $1;
 	}
 
 	}
@@ -444,6 +447,7 @@ expression_term:
 	{
 		//ADD CODE HERE
 		$$ = $1;
+		cout << "expr_term OK\n";
 	}
 	}
 |
@@ -502,6 +506,7 @@ constant:
 		Ast * num_ast = new Number_Ast<double>($1, double_data_type, get_line_number());
 
 		$$ = num_ast;
+		cout << "float " << $1 <<  "OK\n";
 	}
 	}
 ;

@@ -64,12 +64,15 @@ Assignment_Ast::Assignment_Ast(Ast * temp_lhs, Ast * temp_rhs, int line)
 	rhs = temp_rhs;
 	lineno = line;
 	ast_num_child = binary_arity;
+	node_data_type = lhs->get_data_type();
 
 }
 
 Assignment_Ast::~Assignment_Ast()
 {
 	//ADD CODE HERE
+	delete lhs;
+	delete rhs;
 
 }
 
@@ -108,6 +111,7 @@ Name_Ast::Name_Ast(string & name, Symbol_Table_Entry & var_entry, int line)
 	//ADD CODE HERE
 	lineno = line;
 	ast_num_child = zero_arity;
+	node_data_type = variable_symbol_entry->get_data_type();
 }
 
 Name_Ast::~Name_Ast()
@@ -117,7 +121,7 @@ Data_Type Name_Ast::get_data_type()
 {
 	// refer to functions for Symbol_Table_Entry 
 
-	variable_symbol_entry->get_data_type();
+	return variable_symbol_entry->get_data_type();
 	//ADD CODE HERE
 }
 
@@ -125,7 +129,7 @@ Symbol_Table_Entry & Name_Ast::get_symbol_entry()
 {
 	//ADD CODE HERE
 	CHECK_INVARIANT((variable_symbol_entry != NULL), "Vairable_Symbol_Table_Entry cannot be null");
-	*variable_symbol_entry;
+	return *variable_symbol_entry;
 }
 
 void Name_Ast::set_data_type(Data_Type dt)
@@ -232,6 +236,7 @@ Plus_Ast::Plus_Ast(Ast * l, Ast * r, int line)
 	rhs = r;
 	lineno = line;
 	ast_num_child = binary_arity;
+	node_data_type = lhs->get_data_type();
 }
 
 void Plus_Ast::print(ostream & file_buffer)
@@ -274,6 +279,7 @@ Mult_Ast::Mult_Ast(Ast * l, Ast * r, int line)
 	rhs = r;
 	lineno = line;
 	ast_num_child = binary_arity;
+	node_data_type = lhs->get_data_type();
 }
 
 void Mult_Ast::print(ostream & file_buffer)
